@@ -8,6 +8,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.uix.button import Button
 
+class Pantalla_prueba(Screen):
+    pass
+
 class Pantalla1(Screen):
     pass
 
@@ -17,10 +20,13 @@ class Pantalla2(Screen):
 class Pantalla3(Screen):
     pass
 
+class Pantalla4(Screen):
+    pass
+
 class WindowManager(ScreenManager):
     pass
 
-kv = Builder.load_file("App_juego.kv")
+kv = Builder.load_file("juego_aoc.kv")
 
 class AppJuego(App):
     #Window.clearcolor = (.5, 1, .2, 1)  # Establecer el color de fondo de la ventana
@@ -28,6 +34,9 @@ class AppJuego(App):
     
     def build(self):
         return kv
+    
+    def saludar(self):
+        print("Hola, bienvenido")
 
 if __name__ == "__main__":
     AppJuego().run()

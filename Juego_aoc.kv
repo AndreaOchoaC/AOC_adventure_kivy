@@ -1,10 +1,11 @@
 #:import utils kivy.utils
 
 WindowManager:
-    Pantalla_prueba:
     Pantalla1:
     Pantalla2:
     Pantalla3:
+    Pantalla4:
+    Pantalla_prueba:
 
 # etiqueta personalizada con fondo de color
 <BackgroundColorLabel@Label>:
@@ -57,6 +58,8 @@ WindowManager:
             background_normal: ''
             pos_hint: {"center_x": 0.5}
             size_hint: (0.5, 0.5)
+            on_press:
+                app.saludar()
 
         RoundedButton:
             text: "Botón redondeado"
@@ -94,30 +97,45 @@ WindowManager:
             size: self.size
             source: 'stars.jpg'
 
-    GridLayout:
-        cols: 1
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+            
+        GridLayout:
+            cols:1
 
-        Label:
-            markup: True
-            text: "¡Bienvenido/a!"
-            font_size : 20
-            color: "#e2d0e2"
+            Label:
+                markup: True
+                text: "¡Bienvenido/a!"
+                font_size : 20
+                color: "#e2d0e2"
 
-        AnchorLayout:
-            anchor_x: 'center'
-            anchor_y: 'center'
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 50
+                spacing: 20 
 
-            Button:
-                id: btn_inicio
-                text: "Comenzar"
-                font_size: "18"
-                size: (150,100)
-                size_hint: None, 0.25
-                color: "#06a8c9"
-                on_release:
-                    app.root.current = "pantalla2"
-                    root.manager.transition.direction = "right"
+                Button:
+                    id: btn_inicio
+                    text: "Comenzar"
+                    font_size: "18"
+                    size: (150,100)
+                    size_hint: None, 0.25
+                    color: "#06a8c9"
+                    on_release:
+                        app.root.current = "pantalla2"
+                        root.manager.transition.direction = "right"
 
+                Button:
+                    id: btn_inicio
+                    text: "Iniciar sesión"
+                    font_size: "18"
+                    size: (150,100)
+                    size_hint: None, 0.25
+                    color: "#06a8c9"
+                    on_release:
+                        app.root.current = "pantalla4"
+                        root.manager.transition.direction = "down"
 
 <Pantalla2>:
     name: "pantalla2"
@@ -158,9 +176,10 @@ WindowManager:
                 color: "#55d32f"
                 on_release:
                     app.root.current = "pantalla3"
-                    root.manager.transition.direction = "left"
+                    root.manager.transition.direction = "right"
 
 <Pantalla3>:
+
     name: "pantalla3"
 
     canvas.before:
@@ -172,22 +191,91 @@ WindowManager:
     GridLayout:
         cols: 1
 
-        Label:
-            markup: True
+        BackgroundColorLabel:
+            pos_hint: None, 0.5
             text: "Esta es la tercera pantalla"
             font_size : 18
-            color: "#785ab9"
+            color: "#151020"
+            background_color: utils.get_color_from_hex("#96bbfc")
 
         AnchorLayout:
             anchor_x: 'center'
             anchor_y: 'center'
 
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 50
+                spacing: 20 
+            
+                Button:
+                    id: btn_move_inicio
+                    text: "Regresar pantalla"
+                    font_size: "18"
+                    size_hint : 0.25, 0.25
+                    color: "#55d32f"
+                    on_release:
+                        app.root.current = "pantalla2"
+                        root.manager.transition.direction = "left"
+                
+                Button:
+                    id: btn_move_inicio2
+                    text: "Reiniciar"
+                    font_size: "18"
+                    size_hint : 0.25, 0.25
+                    color: "#55d32f"
+                    on_release:
+                        app.root.current = "main"
+                        root.manager.transition.direction = "right"
+            
+
+<Pantalla4>:
+    name: "pantalla4"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'grid.jpg'
+
+    GridLayout:
+        cols: 1
+
+        Label:
+            markup: True
+            text: "Contraseña"
+            font_size : 24
+            color: "#d9641b"
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            
+            TextInput:
+                text: "Introduce la contraseña"
+                size_hint: 0.5,0.5
+                multiline: True
+                password: False
+                font_size: 25
+        
+        BoxLayout:
+            orientation: "horizontal"
+            padding: 50
+            spacing: 20 
+        
             Button:
                 id: btn_move_inicio
-                text: "Regresar a inicio"
+                text: "Intentar"
                 font_size: "18"
-                size_hint : 0.25, 0.25
+                color: "#d36e2f"
+                on_release:
+                    app.root.current = "pantalla2"
+                    root.manager.transition.direction = "left"
+            
+            Button:
+                id: btn_move_inicio2
+                text: "Reiniciar"
+                font_size: "18"
                 color: "#55d32f"
                 on_release:
                     app.root.current = "main"
-                    root.manager.transition.direction = "up"
+                    root.manager.transition.direction = "right"
