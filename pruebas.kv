@@ -1,0 +1,94 @@
+#:import utils kivy.utils
+
+WindowManager:
+    Pantalla_prueba:
+
+# etiqueta personalizada con fondo de color
+<BackgroundColorLabel@Label>:
+    background_color: 0,0,0,0
+    size_hint: None, 0.5
+    #size: self.texture_size
+    width: self.texture_size[0]
+
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+# creemos una subclase para un botón redondeado
+<RoundedButton@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: utils.get_color_from_hex("#aecc27")
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [30]  # Ajusta el valor para redondear más o menos las esquinas
+
+<Pantalla_prueba>:
+    name: "pantalla_prueba"
+    background_color: utils.get_color_from_hex("#8766d3")
+    background_normal: ''
+
+    GridLayout:
+        cols:1
+        padding: 50
+        spacing: 20
+
+        Label:
+            markup: True
+            text: "Pantalla de prueba"
+            font_size : 25
+            font_name: "MiFuente"
+            bold: True
+            color: "#833b83"
+
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: 20
+
+            Button:
+                text: "Botón de prueba"
+                bold: True
+                color: "#9bffff"
+                background_color: utils.get_color_from_hex("#5480df")
+                background_normal: ''
+                #pos_hint: {"center_x": 0.5}
+                size_hint: (0.5, 0.5)
+                on_press:
+                    app.saludar()
+
+            RoundedButton:
+                text: "Botón redondeado"
+                #pos_hint: {"center_x": 0.5}
+                italic: True
+                size_hint: (0.5, 0.75)
+                color: "#850000"
+                on_press: print("¡Botón redondeado presionado!")
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            CheckBox:
+                size_hint: None, None
+                size: "48dp", "48dp"
+                pos_hint: {"center_x": 0.5}
+
+        Slider:
+            id: slider
+            min: 0
+            max: 100
+            step: 1
+            orientation: 'horizontal'
+        Label:
+            text: str(slider.value)
+
+        Switch:
+            id: switch
+        Label:
+            text: ' :) ' if switch.active else ' :( '
