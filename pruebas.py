@@ -13,6 +13,9 @@ LabelBase.register(
 class Pantalla_prueba(Screen):
     pass
 
+class MediaScreen(Screen):
+    pass
+
 class WindowManager(ScreenManager):
     pass
 
@@ -20,7 +23,7 @@ kv = Builder.load_file("pruebas.kv")
 
 class AppPrueba(App):
 
-    col_fondo = get_color_from_hex("#046609")
+    col_fondo = get_color_from_hex("#28812C")
     Window.clearcolor = col_fondo  # Establecer el color de fondo de la ventana
     Window.size = (600, 400)  # Establecer el tamaño de la ventana
     

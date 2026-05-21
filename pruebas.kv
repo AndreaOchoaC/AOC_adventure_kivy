@@ -1,7 +1,8 @@
 #:import utils kivy.utils
 
 WindowManager:
-    Pantalla_prueba:
+    #Pantalla_prueba:
+    MediaScreen:
 
 # etiqueta personalizada con fondo de color
 <BackgroundColorLabel@Label>:
@@ -92,3 +93,30 @@ WindowManager:
             id: switch
         Label:
             text: ' :) ' if switch.active else ' :( '
+
+<MediaScreen>:
+    name: "media_screen"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'grid.jpg'
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+        Label:
+            markup: True
+            text: "Pantalla multimedia"
+            font_size : 25
+            font_name: "MiFuente"
+            bold: True
+            color: "#833b83"
+    
+        Image:
+            source: "swgif.gif"
+            anim_delay: 0.1
+            size_hint: None, None
+            size: 300,300

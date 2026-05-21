@@ -43,43 +43,44 @@ WindowManager:
 
     AnchorLayout:
         anchor_x: 'center'
-        anchor_y: 'center'
 
-        GridLayout:
-            cols:1
+        Label:
+            markup: True
+            text: "¡Bienvenido/a!"
+            font_size : 20
+            color: "#e2d0e2"
 
-            Label:
-                markup: True
-                text: "¡Bienvenido/a!"
-                font_size : 20
-                color: "#e2d0e2"
+    AnchorLayout:
+        anchor_x: 'center'
 
-            BoxLayout:
-                orientation: "horizontal"
-                padding: 50
-                spacing: 20
+        BoxLayout:
+            orientation: "horizontal"
+            padding: 50
+            spacing: 20
+            size_hint_x: None
+            width: self.minimum_width
 
-                Button:
-                    id: btn_inicio
-                    text: "Comenzar"
-                    font_size: "18"
-                    size: (150,100)
-                    size_hint: None, 0.25
-                    color: "#06a8c9"
-                    on_release:
-                        app.root.current = "pantalla2"
-                        root.manager.transition.direction = "right"
+            Button:
+                id: btn_inicio
+                text: "Comenzar"
+                font_size: "18"
+                size: (150,100)
+                size_hint: None, 0.25
+                color: "#06a8c9"
+                on_release:
+                    app.root.current = "pantalla2"
+                    root.manager.transition.direction = "right"
 
-                Button:
-                    id: btn_inicio
-                    text: "Iniciar sesión"
-                    font_size: "18"
-                    size: (150,100)
-                    size_hint: None, 0.25
-                    color: "#06a8c9"
-                    on_release:
-                        app.root.current = "pantalla4"
-                        root.manager.transition.direction = "down"
+            Button:
+                id: btn_inicio
+                text: "Iniciar sesión"
+                font_size: "18"
+                size: (150,100)
+                size_hint: None, 0.25
+                color: "#06a8c9"
+                on_release:
+                    app.root.current = "pantalla4"
+                    root.manager.transition.direction = "down"
 
 <Pantalla2>:
     name: "pantalla2"
@@ -135,12 +136,14 @@ WindowManager:
     GridLayout:
         cols: 1
 
-        BackgroundColorLabel:
-            pos_hint: None, 0.5
-            text: "Esta es la tercera pantalla"
-            font_size : 18
-            color: "#151020"
-            background_color: utils.get_color_from_hex("#96bbfc")
+        AnchorLayout:
+            anchor_x: 'center'
+            BackgroundColorLabel:
+                pos_hint: None, 0.5
+                text: "Esta es la tercera pantalla"
+                font_size : 18
+                color: "#151020"
+                background_color: utils.get_color_from_hex("#96bbfc")
 
         AnchorLayout:
             anchor_x: 'center'
@@ -149,8 +152,8 @@ WindowManager:
             BoxLayout:
                 orientation: "horizontal"
                 padding: 50
-                spacing: 20 
-            
+                spacing: 20
+
                 Button:
                     id: btn_move_inicio
                     text: "Regresar pantalla"
@@ -204,7 +207,7 @@ WindowManager:
         BoxLayout:
             orientation: "horizontal"
             padding: 50
-            spacing: 20 
+            spacing: 20
 
             Button:
                 id: btn_move_inicio
