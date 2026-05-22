@@ -8,7 +8,8 @@ from kivy.utils import get_color_from_hex
 from kivy.core.text import LabelBase
 LabelBase.register(
     name="MiFuente",
-    fn_regular="C:/Users/Dell/Documents/GitHub/AOC_adventure_kivy/mifuente.otf")
+    #fn_regular="C:/Users/Dell/Documents/GitHub/AOC_adventure_kivy/mifuente.otf")
+    fn_regular="mifuente.otf")
 
 class Pantalla_prueba(Screen):
     pass
@@ -18,6 +19,7 @@ class MediaScreen(Screen):
 
 class WindowManager(ScreenManager):
     pass
+
 
 kv = Builder.load_file("pruebas.kv")
 

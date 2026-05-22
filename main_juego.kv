@@ -1,17 +1,35 @@
 #:import utils kivy.utils
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
 
 WindowManager:
+    transition: FadeTransition()
+    duration: 0.30
     Pantalla1:
     Pantalla2:
     Pantalla3:
     Pantalla4:
+    Fade:
+
+<Fade>:
+    name: "fade"
+
+    Button:
+        id: btn_fade
+        text: "ver opacidad"
+        font_size: "18"
+        size: (150,100)
+        size_hint: None, 0.25
+        color: "#06a8c9"
+        on_press: root.fade(btn_fade)
+
 
 # etiqueta personalizada con fondo de color
 <BackgroundColorLabel@Label>:
     background_color: 0,0,0,0
     size_hint: None, 0.5
-    #size: self.texture_size
-    width: self.texture_size[0]
+    size: self.texture_size
+    #width: self.texture_size[0]
 
     canvas.before:
         Color:
@@ -43,11 +61,14 @@ WindowManager:
 
     AnchorLayout:
         anchor_x: 'center'
+        anchor_y: 'top'
 
         Label:
+            id: label_bienv
             markup: True
             text: "¡Bienvenido/a!"
-            font_size : 20
+            font_size : 40
+            bold: True
             color: "#e2d0e2"
 
     AnchorLayout:
@@ -81,6 +102,15 @@ WindowManager:
                 on_release:
                     app.root.current = "pantalla4"
                     root.manager.transition.direction = "down"
+            
+            Button:
+                id: press_anim
+                text: "Click me!"
+                size: (150,100)
+                size_hint: None, 0.25
+                background_color: utils.get_color_from_hex("#dc3cf160")
+                color: 1,1,1,1
+                on_press: root.animate_it(label_bienv)
 
 <Pantalla2>:
     name: "pantalla2"
@@ -95,6 +125,7 @@ WindowManager:
         cols: 1
 
         Label:
+            id: label_mision
             markup: True
             text: "Esta será tu primera misión:"
             font_size : 18
@@ -108,6 +139,18 @@ WindowManager:
                 text: "Etiqueta personalizada con texto muuuuy largo"
                 color: "#e01be0"
                 background_color: utils.get_color_from_hex("#350669")
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            Button:
+                id: btn_contar
+                text: "Click"
+                font_size: "18"
+                size_hint : 0.25, 0.25
+                color: "#55d32f"
+                on_press: root.clicks()
 
         AnchorLayout:
             anchor_x: 'center'
@@ -143,7 +186,7 @@ WindowManager:
                 text: "Esta es la tercera pantalla"
                 font_size : 18
                 color: "#151020"
-                background_color: utils.get_color_from_hex("#96bbfc")
+                background_color: utils.get_color_from_hex("#96bbfca9")
 
         AnchorLayout:
             anchor_x: 'center'
