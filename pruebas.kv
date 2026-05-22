@@ -1,7 +1,11 @@
 #:import utils kivy.utils
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
 
 WindowManager:
-    #Pantalla_prueba:
+    transition: FadeTransition()
+    duration: 0.30
+    Pantalla_prueba:
     MediaScreen:
 
 # etiqueta personalizada con fondo de color
@@ -53,7 +57,7 @@ WindowManager:
             spacing: 20
 
             Button:
-                text: "Botón de prueba"
+                text: "Multimedia"
                 bold: True
                 color: "#9bffff"
                 background_color: utils.get_color_from_hex("#5480df")
@@ -81,15 +85,6 @@ WindowManager:
                 size: "48dp", "48dp"
                 pos_hint: {"center_x": 0.5}
 
-        Slider:
-            id: slider
-            min: 0
-            max: 100
-            step: 1
-            orientation: 'horizontal'
-        Label:
-            text: str(slider.value)
-
         Switch:
             id: switch
         Label:
@@ -102,26 +97,30 @@ WindowManager:
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'grid.jpg'
+            source: 'MEDIA/grid.jpg'
+    BoxLayout:
+        orientation: "vertical"
+        padding:50
+        spacing:20
 
-    AnchorLayout:
-        anchor_x: 'center'
-        anchor_y: 'top'
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'top'
 
-        Label:
-            markup: True
-            text: "Pantalla multimedia"
-            font_size : 25
-            font_name: "MiFuente"
-            bold: True
-            color: "#833b83"
-    
-    AnchorLayout:
-        anchor_x: 'center'
-        anchor_y: 'bottom'
-    
-        Image:
-            source: "gifplanet.gif"
-            anim_delay: 0.1
-            size_hint: None, None
-            size: 300,300
+            Label:
+                markup: True
+                text: "Pantalla multimedia"
+                font_size : 40
+                font_name: "MiFuente"
+                bold: True
+                color: "#833b83"
+        
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+        
+            Image:
+                source: "MEDIA/gifplanet.gif"
+                anim_delay: 0.1
+                size_hint: None, None
+                size: 300,300

@@ -8,7 +8,8 @@ WindowManager:
     Pantalla1:
     Pantalla2:
     Pantalla3:
-    Pantalla4:
+    Pantalla_password:
+    Pantalla_error:
     Fade:
 
 <Fade>:
@@ -28,8 +29,9 @@ WindowManager:
 <BackgroundColorLabel@Label>:
     background_color: 0,0,0,0
     size_hint: None, 0.5
-    size: self.texture_size
-    #width: self.texture_size[0]
+    #size: self.texture_size
+    width: self.texture_size[0]
+    height: self.texture_size[1] + 50
 
     canvas.before:
         Color:
@@ -57,7 +59,7 @@ WindowManager:
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'stars.jpg'
+            source: 'MEDIA/stars.jpg'
 
     AnchorLayout:
         anchor_x: 'center'
@@ -83,9 +85,9 @@ WindowManager:
 
             Button:
                 id: btn_inicio
-                text: "Comenzar"
+                text: "Comenzar aventura"
                 font_size: "18"
-                size: (150,100)
+                size: (170,100)
                 size_hint: None, 0.25
                 color: "#06a8c9"
                 on_release:
@@ -100,7 +102,7 @@ WindowManager:
                 size_hint: None, 0.25
                 color: "#06a8c9"
                 on_release:
-                    app.root.current = "pantalla4"
+                    app.root.current = "pantalla_password"
                     root.manager.transition.direction = "down"
             
             Button:
@@ -119,24 +121,19 @@ WindowManager:
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'stars2.jpg'
+            source: 'MEDIA/stars2.jpg'
 
     GridLayout:
         cols: 1
-
-        Label:
-            id: label_mision
-            markup: True
-            text: "Esta será tu primera misión:"
-            font_size : 18
-            color: "#785ab9"
 
         AnchorLayout:
             anchor_x: 'center'
             anchor_y: 'center'
 
             BackgroundColorLabel:
-                text: "Etiqueta personalizada con texto muuuuy largo"
+                id: label_mision
+                text: "Esta será tu primera misión:\nPresiona el botón 5 veces"
+                font_size : 18
                 color: "#e01be0"
                 background_color: utils.get_color_from_hex("#350669")
 
@@ -174,7 +171,7 @@ WindowManager:
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'dinos1.jpg'
+            source: 'MEDIA/dinos1.jpg'
 
     GridLayout:
         cols: 1
@@ -183,7 +180,7 @@ WindowManager:
             anchor_x: 'center'
             BackgroundColorLabel:
                 pos_hint: None, 0.5
-                text: "Esta es la tercera pantalla"
+                text: "¡Excelente! Pasemos a la siguiente misión"
                 font_size : 18
                 color: "#151020"
                 background_color: utils.get_color_from_hex("#96bbfca9")
@@ -218,21 +215,22 @@ WindowManager:
                         root.manager.transition.direction = "right"
             
 
-<Pantalla4>:
-    name: "pantalla4"
+<Pantalla_password>:
+    name: "pantalla_password"
 
     canvas.before:
         Rectangle:
             pos: self.pos
             size: self.size
-            source: 'grid.jpg'
+            source: 'MEDIA/grid.jpg'
 
     GridLayout:
         cols: 1
 
         Label:
+            id: label_password
             markup: True
-            text: "Contraseña"
+            text: "Ingresa la contraseña: "
             font_size : 24
             color: "#d9641b"
 
@@ -241,7 +239,8 @@ WindowManager:
             anchor_y: 'center'
 
             TextInput:
-                text: "Introduce la contraseña"
+                id: input_password
+                text: ""
                 size_hint: 0.5,0.5
                 multiline: True
                 password: False
@@ -257,14 +256,51 @@ WindowManager:
                 text: "Intentar"
                 font_size: "18"
                 color: "#d36e2f"
-                on_release:
-                    app.root.current = "pantalla2"
-                    root.manager.transition.direction = "left"
+                on_press:
+                    root.check_password(label_password, input_password)
+                    input_password.text = ""
+                #on_release:
+                 #   app.root.current = "pantalla2"
+                  #  root.manager.transition.direction = "left"
        
             Button:
                 id: btn_move_inicio2
                 text: "Reiniciar"
                 font_size: "18"
+                color: "#55d32f"
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"
+
+<Pantalla_error@Screen>:
+    name: "pantalla_error"
+
+    canvas.before:
+        Color:
+            rgba: utils.get_color_from_hex("#a10a0a")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation : "vertical"
+        padding:50
+        spacing:20
+    
+        AnchorLayout:
+            anchor_x: "center"
+            Label:
+                text: "ERROR\nEspera para intentarlo otra vez"
+                color: utils.get_color_from_hex("#ffffff")
+                font_size: 40
+                bold: True
+
+        AnchorLayout:
+            anchor_x: "center"
+            Button:
+                id: btn_move_inicio2
+                text: "Reiniciar"
+                font_size: "18"
+                size_hint: 0.25,0.25
                 color: "#55d32f"
                 on_release:
                     app.root.current = "main"

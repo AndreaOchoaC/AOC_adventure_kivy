@@ -8,6 +8,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.core.window import Window
 from kivy.uix.button import Button
 from kivy.animation import Animation
+from kivy.properties import NumericProperty
 
 class Fade(Screen):
     opacidad = 1
@@ -42,8 +43,27 @@ class Pantalla2(Screen):
 class Pantalla3(Screen):
     pass
 
-class Pantalla4(Screen):
-    pass
+class Pantalla_password(Screen):
+    intentos = NumericProperty(1)
+
+    def check_password(self,label_password, input_password):
+        
+        self.password = input_password.text
+        label_password.text = "Ingresa la contraseña: "
+
+        if self.password == "12345":
+            self.intentos = 3 #reinicia el texto y num de intentos para el siguiente usuario
+            input_password.text = ""
+            print("Contraseña correcta")
+            self.manager.current = 'pantalla2'
+        else:
+            print(f'Error. Intento {self.intentos}/3')
+            label_password.text = f'Error. Intento {self.intentos}/3'
+            input_password.text = ""
+            self.intentos += 1
+            if self.intentos > 3:
+                self.manager.current = 'pantalla_error'
+
 
 class WindowManager(ScreenManager):
     pass

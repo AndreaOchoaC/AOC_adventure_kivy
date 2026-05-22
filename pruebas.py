@@ -20,7 +20,6 @@ class MediaScreen(Screen):
 class WindowManager(ScreenManager):
     pass
 
-
 kv = Builder.load_file("pruebas.kv")
 
 class AppPrueba(App):
