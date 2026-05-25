@@ -1,14 +1,14 @@
 # AOC_adventure_kivy
-Aplicación multi-plataforma desarrollada con Kivy, temática de alguna historia.
+Aplicación multi-plataforma desarrollada con Kivy, temática de alguna historia. Múltiples pantallas con "mini-misiones" en cada una. Pantalla de inicio de sesión con contraseña. 
 
 NOTAS ANDREA -Pendiente:
-* validar contraseña
-* contar clicks para llevar a la pantalla
-* fuente, tamaño y tipo de letra
+* validar contraseña ✅
+* contar clicks para llevar a la pantalla ✅
+* fuente, tamaño y tipo de letra ✅ ✅ 
 * videos y sonidos,  gifs
-* pantalla de carga
+* pantalla de carga 
 
-NOTA: Opciones para transitar entre pantallas
+NOTA: **Opciones para transitar entre pantallas**
 
 NoTransition - switches screens instantly with no animation
 
