@@ -4,9 +4,14 @@ Aplicación multi-plataforma desarrollada con Kivy, temática de alguna historia
 NOTAS ANDREA -Pendiente:
 * validar contraseña ✅
 * contar clicks para llevar a la pantalla ✅
-* fuente, tamaño y tipo de letra ✅ ✅ 
-* videos y sonidos,  gifs P - ✅  - ✅ 
+* fuente, tamaño y tipo de letra ✅ ✅ ✅
+* videos y sonidos,  gifs P ✅ ✅ ✅ 
 * pantalla de carga 
+* transición entre pantallas ✅
+
+* pendiente 28/05: botón de pausar/reanudar música en todas las pantallas
+* pendiente 28/05: botón de MENÚ en todas las pantallas
+* pendiente 28/05: opcional? mover las funciones de música solamente a una pantalla específica de música?
 
 NOTA: **Opciones para transitar entre pantallas**
 

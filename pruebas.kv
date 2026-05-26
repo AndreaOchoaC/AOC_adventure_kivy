@@ -5,8 +5,10 @@
 WindowManager:
     transition: FadeTransition()
     duration: 0.30
-    #Pantalla_prueba:
+    MenuScreen:
+    Pantalla_prueba:
     MediaScreen:
+    VideoScreen:
 
 # etiqueta personalizada con fondo de color
 <BackgroundColorLabel@Label>:
@@ -34,6 +36,61 @@ WindowManager:
             pos: self.pos
             radius: [30]  # Ajusta el valor para redondear más o menos las esquinas
 
+# Menú
+<MenuScreen>:
+    name: "menu"
+    background_color: utils.get_color_from_hex("#8766d3")
+    background_normal: ''
+
+    BoxLayout:
+        orientation : "vertical"
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Menú"
+            font_name: "MiFuente"
+            font_size: 20
+            bold: True
+
+        Button:
+            id: btn_menu_main
+            text: "Pantalla principal"
+            bold: True
+            color: "#9bffff"
+            background_color: utils.get_color_from_hex("#5480df")
+            background_normal: ''
+            size_hint: (0.5, 0.5)
+            on_release:
+                app.root.current = "pantalla_prueba"
+                root.manager.transition.direction = "down"
+
+        Button:
+            id: btn_menu_media
+            text: "Multimedia"
+            bold: True
+            color: "#9bffff"
+            background_color: utils.get_color_from_hex("#5480df")
+            background_normal: ''
+            size_hint: (0.5, 0.5)
+            on_release:
+                app.root.current = "media_screen"
+                root.manager.transition.direction = "down"
+       
+        Button:
+            id: btn_menu_video
+            text: "Reproductor de video"
+            bold: True
+            color: "#9bffff"
+            background_color: utils.get_color_from_hex("#5480df")
+            background_normal: ''
+            size_hint: (0.5, 0.5)
+            on_release:
+                app.root.current = "video_screen"
+                root.manager.transition.direction = "down"
+
+
+# Pantalla con todos los tipos de widgets
 <Pantalla_prueba>:
     name: "pantalla_prueba"
     background_color: utils.get_color_from_hex("#8766d3")
@@ -90,7 +147,10 @@ WindowManager:
         Label:
             text: ' :) ' if switch.active else ' :( '
 
+
+# pantalla con GIFS y efectos de sonido en botones
 <MediaScreen>:
+
     name: "media_screen"
 
     canvas.before:
@@ -98,6 +158,7 @@ WindowManager:
             pos: self.pos
             size: self.size
             source: 'MEDIA/grid.jpg'
+
     BoxLayout:
         orientation: "vertical"
         padding:50
@@ -125,6 +186,54 @@ WindowManager:
                 size_hint: None, None
                 size: 300,300
 
+        BoxLayout:
+            orientation: "horizontal"
+            padding: 20
+            spacing: 20
+
+            Button:
+                id: btn_efectos
+                text: "Click me!!"
+                size_hint: 0.25,0.25
+                on_press: root.play_sound("MEDIA/sparkle_sound.mp3")
+
+            ToggleButton:
+                id: btn_musica
+                #text: "⏯"
+                text: "REANUDAR MÚSICA" if self.state == 'down' else "PAUSAR MÚSICA"
+                size_hint: 0.25,0.25
+                #size: 100,50
+                color: utils.get_color_from_hex("#000000")
+                background_color: utils.get_color_from_hex("#aecc27")
+                background_normal: ''
+                on_press: app.toggle_musica()
+
+
+# Pantalla con video/videoPlayer
+<VideoScreen>:
+    name: "video_screen"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            markup: True
+            text: "Pantalla para video"
+            font_size : 25
+            font_name: "MiFuente"
+            bold: True
+            color: "#833b83"
+
+        #VideoPlayer:
+        Video:
+            size_hint: 1,1
+            #width: self.minimum_width
+            source: "MEDIA/video_tortuga.mp4"
+            state: 'play'
+            options: {'allow_stretch': True}
+
         AnchorLayout:
             anchor_x: 'right'
             anchor_y: 'bottom'
@@ -132,9 +241,9 @@ WindowManager:
             ToggleButton:
                 id: btn_musica
                 #text: "⏯"
-                text: "REANUDAR" if self.state == 'down' else "PAUSAR"
-                size_hint: None, None
-                size: 100,50
+                text: "REANUDAR MÚSICA" if self.state == 'down' else "PAUSAR MÚSICA"
+                size_hint: 0.25,0.25
+                size: 150,50
                 color: utils.get_color_from_hex("#000000")
                 background_color: utils.get_color_from_hex("#aecc27")
                 background_normal: ''

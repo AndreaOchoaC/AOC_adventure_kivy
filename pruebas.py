@@ -2,12 +2,18 @@ from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
-from kivy.uix.button import Button
-from kivy.utils import get_color_from_hex
+
 from kivy.properties import BooleanProperty
 from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
+
+from kivy.uix.video import Video
+from kivy.uix.videoplayer import VideoPlayer
+# para que reproduzca los videos correctamente:
+# pip install ffpyplayer
+
 from kivy.core.text import LabelBase
+from kivy.utils import get_color_from_hex
 
 LabelBase.register(
     name="MiFuente",
@@ -17,8 +23,25 @@ LabelBase.register(
 class Pantalla_prueba(Screen):
     pass
 
-class MediaScreen(Screen):
+class MenuScreen(Screen):
     pass
+
+class MediaScreen(Screen):
+    def play_sound(self, filename):
+        sound = SoundLoader.load(filename)
+        if sound:
+            sound.play()
+
+class VideoScreen(Screen):
+    pass
+
+# si quisiéramos definir el video en la clase VideoScreen:
+'''
+class VideoScreen(Screen):
+    #video = Video(source="MEDIA/video_patos.mp4", state="play")
+    #video = VideoPlayer(source="MEDIA/video_patos.mp4", state="play")
+    return video
+'''
 
 class WindowManager(ScreenManager):
     pass
@@ -29,10 +52,11 @@ class AppPrueba(App):
 
     col_fondo = get_color_from_hex("#58A75C")
     Window.clearcolor = col_fondo  # Establecer el color de fondo de la ventana
-    Window.size = (600, 400)  # Establecer el tamaño de la ventana
+    Window.size = (600, 500)  # Establecer el tamaño de la ventana
     
+    # Nota: Si pongo las opciones de música aquí, se reproducirá en todas las ventanas
     def build(self):
-        self.sound = SoundLoader.load("MEDIA/musica_lofi_cozy.mp3")
+        self.sound = SoundLoader.load("MEDIA/musica_lofi_cinematic.mp3")
         self.paused = BooleanProperty(False)  # Variable para controlar el estado de pausa
         self.sound_pos = 0 # Variable para almacenar la posición de reproducción (manual tracking)
         self.is_paused = False  # Estado de la música
@@ -44,10 +68,10 @@ class AppPrueba(App):
             self.sound.loop = False  # Desactivar loop para que seek funcione correctamente
             # Retrasar la reproducción para asegurar que el sonido esté inicializado
             Clock.schedule_once(self._play_sound, 0.1)
-            
+
         return kv
     
-    def _play_sound(self, dt):
+    def _play_sound(self,dt):
         if self.sound:
             self.sound.play()
             self.play_start_time = Clock.get_time()  # Guardar tiempo de inicio
@@ -59,8 +83,8 @@ class AppPrueba(App):
             self.update_event = Clock.schedule_interval(self._update_position, 0.1)
             print("Música iniciada")
     
-    def _update_position(self, dt):
-        """Track music position by elapsed time"""
+    def _update_position(self,dt):
+        # obtener la posición de la música
         if self.sound and self.sound.state == 'play':
             elapsed = Clock.get_time() - self.play_start_time
             self.sound_pos = elapsed + self.sound_pos  # Acumular el tiempo transcurrido
@@ -90,7 +114,7 @@ class AppPrueba(App):
                 self.paused = False
                 print(f"Se reanudó la música desde la posición: {self.sound_pos}")
     
-    def resume_seek(self, dt):
+    def resume_seek(self,dt):
         if self.sound and self.sound.state == 'play' and self.sound_pos > 0:
             try:
                 self.sound.seek(self.sound_pos)
@@ -98,9 +122,6 @@ class AppPrueba(App):
             except Exception as e:
                 print(f"Error al buscar posición: {e}")
 
-    def saludar(self):
-        print("Hola, bienvenido")
-    
     def get_music_status(self):
         """Debug method to check current music status"""
         if self.sound:
