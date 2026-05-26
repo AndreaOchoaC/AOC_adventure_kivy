@@ -52,6 +52,7 @@ class AppPrueba(App):
             self.sound.play()
             self.play_start_time = Clock.get_time()  # Guardar tiempo de inicio
             self.sound_pos = 0  # Reset posición al iniciar
+
             # Iniciar actualizaciones periódicas de posición
             if self.update_event:
                 self.update_event.cancel()
@@ -90,7 +91,6 @@ class AppPrueba(App):
                 print(f"Se reanudó la música desde la posición: {self.sound_pos}")
     
     def resume_seek(self, dt):
-        
         if self.sound and self.sound.state == 'play' and self.sound_pos > 0:
             try:
                 self.sound.seek(self.sound_pos)
