@@ -5,7 +5,7 @@ NOTAS ANDREA -Pendiente:
 * validar contraseña ✅
 * contar clicks para llevar a la pantalla ✅
 * fuente, tamaño y tipo de letra ✅ ✅ 
-* videos y sonidos,  gifs
+* videos y sonidos,  gifs P - ✅  - ✅ 
 * pantalla de carga 
 
 NOTA: **Opciones para transitar entre pantallas**

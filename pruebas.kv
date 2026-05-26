@@ -5,7 +5,7 @@
 WindowManager:
     transition: FadeTransition()
     duration: 0.30
-    Pantalla_prueba:
+    #Pantalla_prueba:
     MediaScreen:
 
 # etiqueta personalizada con fondo de color
@@ -47,10 +47,10 @@ WindowManager:
         Label:
             markup: True
             text: "Pantalla de prueba"
-            font_size : 25
+            font_size : 30
             font_name: "MiFuente"
             bold: True
-            color: "#833b83"
+            color: "#c595c5"
 
         BoxLayout:
             orientation: "horizontal"
@@ -101,7 +101,7 @@ WindowManager:
     BoxLayout:
         orientation: "vertical"
         padding:50
-        spacing:20
+        spacing:15
 
         AnchorLayout:
             anchor_x: 'center'
@@ -110,17 +110,32 @@ WindowManager:
             Label:
                 markup: True
                 text: "Pantalla multimedia"
-                font_size : 40
+                font_size : 25
                 font_name: "MiFuente"
                 bold: True
                 color: "#833b83"
-        
+
         AnchorLayout:
             anchor_x: 'center'
-            anchor_y: 'bottom'
-        
+            anchor_y: 'center'
+
             Image:
                 source: "MEDIA/gifplanet.gif"
                 anim_delay: 0.1
                 size_hint: None, None
                 size: 300,300
+
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+
+            ToggleButton:
+                id: btn_musica
+                #text: "⏯"
+                text: "REANUDAR" if self.state == 'down' else "PAUSAR"
+                size_hint: None, None
+                size: 100,50
+                color: utils.get_color_from_hex("#000000")
+                background_color: utils.get_color_from_hex("#aecc27")
+                background_normal: ''
+                on_press: app.toggle_musica()
