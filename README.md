@@ -12,6 +12,7 @@ NOTAS ANDREA -Pendiente:
 * pendiente 28/05: botón de pausar/reanudar música en todas las pantallas
 * pendiente 28/05: botón de MENÚ en todas las pantallas
 * pendiente 28/05: opcional? mover las funciones de música solamente a una pantalla específica de música?
+* pendiente 28/05: La pausa inicial de sonido es demasiado larga
 
 NOTA: **Opciones para transitar entre pantallas**
 
