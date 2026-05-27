@@ -1,9 +1,10 @@
 #:import utils kivy.utils
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
 
 WindowManager:
-    transition: FadeTransition()
+    transition: RiseInTransition()
     duration: 0.30
     MenuScreen:
     Pantalla_prueba:
@@ -42,52 +43,66 @@ WindowManager:
     background_color: utils.get_color_from_hex("#8766d3")
     background_normal: ''
 
-    BoxLayout:
-        orientation : "vertical"
-        padding: 20
-        spacing: 20
+    GridLayout:
+        rows:2
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Label:
+                text: "Menú"
+                font_name: "MiFuente"
+                font_size: 40
+                bold: True
+                color: utils.get_color_from_hex("#77007e")
+                size_hint: None, 0.5
 
-        Label:
-            text: "Menú"
-            font_name: "MiFuente"
-            font_size: 20
-            bold: True
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
 
-        Button:
-            id: btn_menu_main
-            text: "Pantalla principal"
-            bold: True
-            color: "#9bffff"
-            background_color: utils.get_color_from_hex("#5480df")
-            background_normal: ''
-            size_hint: (0.5, 0.5)
-            on_release:
-                app.root.current = "pantalla_prueba"
-                root.manager.transition.direction = "down"
+            BoxLayout:
+                orientation : "horizontal"
+                padding: 40
+                spacing: 10
 
-        Button:
-            id: btn_menu_media
-            text: "Multimedia"
-            bold: True
-            color: "#9bffff"
-            background_color: utils.get_color_from_hex("#5480df")
-            background_normal: ''
-            size_hint: (0.5, 0.5)
-            on_release:
-                app.root.current = "media_screen"
-                root.manager.transition.direction = "down"
-       
-        Button:
-            id: btn_menu_video
-            text: "Reproductor de video"
-            bold: True
-            color: "#9bffff"
-            background_color: utils.get_color_from_hex("#5480df")
-            background_normal: ''
-            size_hint: (0.5, 0.5)
-            on_release:
-                app.root.current = "video_screen"
-                root.manager.transition.direction = "down"
+                Button:
+                    id: btn_menu_main
+                    text: "Pantalla principal"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release:
+                        app.root.current = "pantalla1"
+                        root.manager.transition.direction = "down"
+
+                Button:
+                    id: btn_menu_media
+                    text: "Multimedia"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release:
+                        app.root.current = "media_screen"
+                        root.manager.transition.direction = "down"
+
+                Button:
+                    id: btn_menu_video
+                    text: "Reproductor de video"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release:
+                        app.root.current = "video_screen"
+                        root.manager.transition.direction = "down"
 
 
 # Pantalla con todos los tipos de widgets
@@ -107,11 +122,23 @@ WindowManager:
             font_size : 30
             font_name: "MiFuente"
             bold: True
-            color: "#c595c5"
+            color: "#682b68"
 
         BoxLayout:
             orientation: "horizontal"
             spacing: 20
+
+            canvas.before:
+                Color:
+                    rgba: 0.2, 0.6, 1.0, 0.3 
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: 1.0, 0.0, 0.0, 1.0
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
 
             Button:
                 text: "Multimedia"
@@ -119,8 +146,7 @@ WindowManager:
                 color: "#9bffff"
                 background_color: utils.get_color_from_hex("#5480df")
                 background_normal: ''
-                #pos_hint: {"center_x": 0.5}
-                size_hint: (0.5, 0.5)
+                size_hint: (0.5,0.25)
                 on_release:
                     app.root.current = "media_screen"
                     root.manager.transition.direction = "down"
@@ -129,7 +155,7 @@ WindowManager:
                 text: "Botón redondeado"
                 #pos_hint: {"center_x": 0.5}
                 italic: True
-                size_hint: (0.5, 0.75)
+                size_hint: (0.5, 0.25)
                 color: "#850000"
                 on_press: print("¡Botón redondeado presionado!")
 
@@ -137,15 +163,28 @@ WindowManager:
             anchor_x: 'center'
             anchor_y: 'center'
 
-            CheckBox:
-                size_hint: None, None
-                size: "48dp", "48dp"
-                pos_hint: {"center_x": 0.5}
+            canvas.before:
+                Color:
+                    rgba: 0.2, 0.6, 1.0, 0.3 
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: 1.0, 0.0, 0.0, 1.0
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
 
-        Switch:
-            id: switch
-        Label:
-            text: ' :) ' if switch.active else ' :( '
+            BoxLayout:
+                orientation: 'horizontal'
+
+                CheckBox:
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                Switch:
+                    id: switch
+                Label:
+                    text: ' :) ' if switch.active else ' :( '
 
 
 # pantalla con GIFS y efectos de sonido en botones
@@ -212,7 +251,6 @@ WindowManager:
 # Pantalla con video/videoPlayer
 <VideoScreen>:
     name: "video_screen"
-
     BoxLayout:
         orientation: "vertical"
         padding: 10
@@ -229,7 +267,6 @@ WindowManager:
         #VideoPlayer:
         Video:
             size_hint: 1,1
-            #width: self.minimum_width
             source: "MEDIA/video_tortuga.mp4"
             state: 'play'
             options: {'allow_stretch': True}
