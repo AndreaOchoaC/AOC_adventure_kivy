@@ -5,6 +5,7 @@
 WindowManager:
     transition: FadeTransition()
     duration: 0.30
+    #GameScreen:
     MenuScreen:
     Pantalla1:
     Pantalla2:
@@ -40,6 +41,20 @@ WindowManager:
             size: self.size
             pos: self.pos
             radius: [30]  # Ajusta el valor para redondear más o menos las esquinas
+
+<GameScreen>:
+    name: "pantalla_juego"
+    background_color: utils.get_color_from_hex("#8766d3")
+    background_normal: ''
+
+    on_enter: app.colocar_trinkets(self.ids.container, app.lista_trinkets)
+
+    FloatLayout:
+        id: container
+        Label:
+            text: "Prueba"
+
+# Pop Up de inventario
 
 # Pantalla de menú
 
@@ -426,6 +441,8 @@ WindowManager:
 
 <VideoScreen>:
     name: "video_screen"
+    background_color: utils.get_color_from_hex("#71ffac")
+    background_normal: ''
 
     BoxLayout:
         orientation: "vertical"
@@ -451,7 +468,7 @@ WindowManager:
                 options: {"eos": "loop"}
                 allow_stretch: True
                 keep_ratio: False
-                size_hint_y: 0.7    # 70% of height
+                size_hint_y: 1    # 70% of height
 
         AnchorLayout:
             anchor_x: 'right'

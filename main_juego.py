@@ -2,13 +2,16 @@
 # Aplicación con varias pantallas y botones para navegar entre ellas
 # usaremos un archivo .kv para definir la interfaz gráfica
 
+import random
+
 from kivy.lang import Builder
 from kivy.app import App
 from kivy.properties import NumericProperty, BooleanProperty
 
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 
+from kivy.uix.image import Image
 from kivy.animation import Animation
 from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
@@ -78,6 +81,17 @@ class MediaScreen(Screen):
         if sound:
             sound.play()
 
+class GameScreen(Screen):
+
+    def recolectar(self, widget, touch, *args):
+        if widget.collide_point(*touch.pos) and widget.opacity == 1:
+            app = App.get_running_app()
+            app.puntos +=1 # el puntaje se guarda en todas las ventanas
+            print("Puntos:", self.puntos)
+            self.root.ids.score_label = f'Puntos: {self.puntos}'
+            widget.opacity = 0 # esconde el objeto después de encontrarlo
+
+
 class WindowManager(ScreenManager):
     pass
 
@@ -86,7 +100,7 @@ kv = Builder.load_file("main_juego.kv")
 class AppJuego(App):
     #Window.clearcolor = (.5, 1, .2, 1)  # Establecer el color de fondo de la ventana
     Window.size = (600, 400)  # Establecer el tamaño de la ventana
-    
+
     def build(self):
         # Nota: Si pongo las opciones de música aquí, se reproducirá en todas las ventanas
 
@@ -156,10 +170,32 @@ class AppJuego(App):
             except Exception as e:
                 print(f"Error al buscar posición: {e}")
 
-        return kv
-    
-    def saludar(self):
-        print("Hola, bienvenido")
+    # función para recolectar los objetos
 
+    puntos = 0
+    lista_trinkets = ["MEDIA/trinkets/trinket1.png",
+                    "MEDIA/trinkets/trinket2.png",
+                    "MEDIA/trinkets/trinket3.png",
+                    "MEDIA/trinkets/trinket4.png",
+                    "MEDIA/trinkets/trinket5.png"]
+
+    def colocar_trinkets(self,screen,trinkets):
+        import random
+        from kivy.uix.image import Image
+    
+        for ruta in trinkets:
+            print("Loading:", ruta)  # Debug print
+            x = random.uniform(0.1,0.8)
+            y = random.uniform(0.1,0.8)
+
+            trinket = Image(
+                source = ruta,
+                size_hint = (None, None),
+                size=(100,100),
+                pos_hint = {"x":x, "y":y}
+            )
+            trinket.bind(on_touch_down=screen.recolectar)
+            screen.add_widget(trinket) 
+    
 if __name__ == "__main__":
     AppJuego().run()
