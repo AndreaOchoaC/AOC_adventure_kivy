@@ -43,6 +43,7 @@ class Pantalla2(Screen):
             limite = True
             self.manager.current = "pantalla3"
             self.manager.transition.direction = "right"
+            i=0 # reiniciar para la siguiente vez que entremos a la pantalla
     
 class Pantalla3(Screen):
     pass
