@@ -1,6 +1,7 @@
 #:import utils kivy.utils
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import Factory kivy.factory.Factory
 
 WindowManager:
     transition: FadeTransition()
@@ -14,6 +15,18 @@ WindowManager:
     Pantalla_error:
     MediaScreen:
     VideoScreen:
+
+# Pop Up de inventario
+
+<MyPopup@Popup>:
+    auto_dismiss: True
+    title: "Mi PopUp"
+    size_hint: 0.5,0.5
+    Label:
+        text: "Hola"
+
+<SoundButton@Button>:
+    on_press: root.play.sound("MEDIA/sparkle.mp3")
 
 # etiqueta personalizada con fondo de color
 <BackgroundColorLabel@Label>:
@@ -54,7 +67,6 @@ WindowManager:
         Label:
             text: "Prueba"
 
-# Pop Up de inventario
 
 # Pantalla de menú
 
@@ -87,7 +99,7 @@ WindowManager:
 
                 Button:
                     id: btn_menu_main
-                    text: "Pantalla principal"
+                    text: "Pop Up"
                     bold: True
                     color: "#9bffff"
                     background_color: utils.get_color_from_hex("#5480df")
@@ -123,6 +135,17 @@ WindowManager:
                     on_release:
                         app.root.current = "video_screen"
                         root.manager.transition.direction = "down"
+                
+                Button:
+                    id: btn_popup
+                    text: "Pop Up"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release: Factory.MyPopup().open()
 
 <Pantalla1>:
     name: "main"
@@ -166,7 +189,7 @@ WindowManager:
                     app.root.current = "pantalla2"
                     root.manager.transition.direction = "right"
 
-            Button:
+            SoundButton:
                 id: btn_inicio
                 text: "Iniciar sesión"
                 font_size: "18"
@@ -225,7 +248,7 @@ WindowManager:
             anchor_x: 'center'
             anchor_y: 'center'
 
-            Button:
+            SoundButton:
                 id: btn_move2
                 text: "Siguiente pantalla"
                 font_size: "18"
@@ -445,7 +468,7 @@ WindowManager:
     background_normal: ''
 
     BoxLayout:
-        orientation: "vertical"
+        orientation: "horizontal"
         padding: 10
         spacing: 10
 
@@ -457,19 +480,7 @@ WindowManager:
             font_name: "MiFuente"
             bold: True
             color: "#833b83"
-
-        AnchorLayout:
-            anchor_x: 'center'
-            anchor_y: 'center'
-
-            Video:
-                source: "MEDIA/video_tortuga.mp4"
-                state: "play"
-                options: {"eos": "loop"}
-                allow_stretch: True
-                keep_ratio: False
-                size_hint_y: 1    # 70% of height
-
+        
         AnchorLayout:
             anchor_x: 'right'
             anchor_y: 'bottom'
@@ -484,3 +495,18 @@ WindowManager:
                 background_color: utils.get_color_from_hex("#aecc27")
                 background_normal: ''
                 on_press: app.toggle_musica()
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            size_hint_y: 0.7
+
+            Video:
+                source: "MEDIA/video_tortuga.mp4"
+                state: "play"
+                options: {"eos": "loop"}
+                allow_stretch: True
+                keep_ratio: False
+             
+
+        

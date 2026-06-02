@@ -24,13 +24,17 @@ class Pantalla_prueba(Screen):
     pass
 
 class MenuScreen(Screen):
-    pass
+    sound=SoundLoader.load("MEDIA/musica_bounty_hunter.mp3")
+    if sound:
+        sound.volume = 1
+        sound.loop = True
+        sound.play()
+    
+    on_pre_leave = sound.stop()
+
 
 class MediaScreen(Screen):
-    def play_sound(self, filename):
-        sound = SoundLoader.load(filename)
-        if sound:
-            sound.play()
+    pass
 
 class VideoScreen(Screen):
     pass
@@ -55,6 +59,12 @@ class AppPrueba(App):
     Window.size = (600, 500)  # Establecer el tamaño de la ventana
     
     # Nota: Si pongo las opciones de música aquí, se reproducirá en todas las ventanas
+    
+    def play_sound(self, filename):
+        sound = SoundLoader.load(filename)
+        if sound:
+            sound.play()
+
     def build(self):
         self.sound = SoundLoader.load("MEDIA/musica_lofi_cinematic.mp3")
         self.paused = BooleanProperty(False)  # Variable para controlar el estado de pausa
@@ -62,6 +72,7 @@ class AppPrueba(App):
         self.is_paused = False  # Estado de la música
         self.play_start_time = 0  # Tiempo cuando comenzó la reproducción
         self.update_event = None  # Event para actualizar la posición
+        #self.sound.play()
 
         if self.sound:
             self.sound.volume = 1
