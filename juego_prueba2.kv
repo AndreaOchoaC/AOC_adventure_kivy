@@ -1,0 +1,449 @@
+#:import utils kivy.utils
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import Factory kivy.factory.Factory
+
+WindowManager:
+    transition: FadeTransition()
+    duration: 0.30
+    #GameScreen:
+    #MenuScreen:
+    Pantalla1:
+    Pantalla2:
+    Pantalla3:
+    Pantalla_password:
+    Pantalla_error:
+
+# Pop Up de inventario
+# ----- Inventario -----
+
+<MyPopup@Popup>:
+    auto_dismiss: True
+    title: "Inventario"
+    size_hint: 0.6,0.75
+    background_normal: '' # limpiar el gris de fondo
+    separator_color: utils.get_color_from_hex("#ddb41f")
+    background_color: 4,.4,.2,1
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            text: "Llevas # objetos coleccionados"
+            font_name: "MiFuente"
+            font_size: 16
+            size_hint: 1, 0.25
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            GridLayout:
+                cols:3
+                size_hint_y: None
+                row_default_height: "40dp"
+                row_force_default: True
+                spacing: 2
+                padding: 10
+
+                # Vamos a colocar las 9 imágenes individualmente
+                Image:
+                    source: "MEDIA/trinkets/trinket3.png"
+                Image:
+                    source: "MEDIA/trinkets/missing.png"
+                Image: 
+                    source: "MEDIA/trinkets/missing.png"
+                Image: 
+                    source: "MEDIA/trinkets/trinket5.png"
+                Image: 
+                    source: "MEDIA/trinkets/missing.png"
+                Image: 
+                    source: "MEDIA/trinkets/missing.png"
+                Image:
+                    source: "MEDIA/trinkets/missing.png"
+                Image:
+                    source: "MEDIA/trinkets/trinket2.png"
+
+<SoundButton@Button>:
+    on_press: root.play.sound("MEDIA/sparkle.mp3")
+
+# etiqueta personalizada con fondo de color
+<BackgroundColorLabel@Label>:
+    background_color: 0,0,0,0
+    size_hint: None, 0.5
+    #size: self.texture_size
+    width: self.texture_size[0]
+    height: self.texture_size[1] + 50
+
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+# creemos una subclase para un botón redondeado
+<RoundedButton@Button>:
+    background_color: (0,0,0,0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: utils.get_color_from_hex("#cc9227")
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [30]  # Ajusta el valor para redondear más o menos las esquinas
+
+<GameScreen>:
+    name: "pantalla_juego"
+    background_color: utils.get_color_from_hex("#8766d3")
+    background_normal: ''
+
+    on_enter: app.colocar_trinkets(self.ids.container, app.lista_trinkets)
+
+    FloatLayout:
+        id: container
+        Label:
+            text: "Prueba"
+
+
+# Pantalla de menú
+
+<MenuScreen@Screen>:
+    name: "menu"
+    background_color: utils.get_color_from_hex("#8766d3")
+    background_normal: ''
+
+    GridLayout:
+        rows:2
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            Label:
+                text: "Menú"
+                font_name: "MiFuente"
+                font_size: 40
+                bold: True
+                color: utils.get_color_from_hex("#77007e")
+                size_hint: None, 0.5
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BoxLayout:
+                orientation : "horizontal"
+                padding: 40
+                spacing: 10
+
+                Button:
+                    id: btn_menu_main
+                    text: "Iniciar sesión"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release:
+                        app.root.current = "pantalla_password"
+
+                Button:
+                    id: btn_menu_media
+                    text: "Misión 1"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release:
+                        app.root.current = "pantalla1"
+                        root.manager.transition.direction = "down"
+
+                Button:
+                    id: btn_menu_video
+                    text: "Misión 2"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release:
+                        app.root.current = "pantalla2"
+                        root.manager.transition.direction = "down"
+                
+                Button:
+                    id: btn_popup
+                    text: "Ver inventario"
+                    bold: True
+                    color: "#9bffff"
+                    background_color: utils.get_color_from_hex("#5480df")
+                    background_normal: ''
+                    size_hint: None, None
+                    size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                    on_release: Factory.MyPopup().open()
+
+# Pantalla principal
+<Pantalla1>:
+    name: "main"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'MEDIA/stars.jpg'
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'top'
+
+        Label:
+            id: label_bienv
+            markup: True
+            text: "¡Bienvenido/a!"
+            font_size : 40
+            bold: True
+            color: "#e2d0e2"
+
+    AnchorLayout:
+        anchor_x: 'center'
+
+        BoxLayout:
+            orientation: "horizontal"
+            padding: 50
+            spacing: 20
+            size_hint_x: None
+            width: self.minimum_width
+
+            Button:
+                id: btn_inicio
+                text: "Comenzar aventura"
+                font_size: "18"
+                size: (170,100)
+                size_hint: None, 0.25
+                color: "#06a8c9"
+                on_release:
+                    app.root.current = "pantalla2"
+                    root.manager.transition.direction = "right"
+
+            # SoundButton:
+            # cambiar por Button en lo que se corrige el error
+            Button:
+                id: btn_inicio
+                text: "Iniciar sesión"
+                font_size: "18"
+                size: (150,100)
+                size_hint: None, 0.25
+                color: "#06a8c9"
+                on_release:
+                    app.root.current = "pantalla_password"
+                    root.manager.transition.direction = "down"
+
+            Button:
+                id: btn_popup
+                text: "Ver inventario"
+                bold: True
+                color: "#9bffff"
+                background_color: utils.get_color_from_hex("#5480df")
+                background_normal: ''
+                size_hint: None, 0.25
+                size: (self.texture_size[0] + 20, self.texture_size[1] + 20)
+                on_release:
+                    Factory.MyPopup().open()
+
+            Button:
+                id: press_anim
+                text: "Click me!"
+                size: (150,100)
+                size_hint: None, 0.25
+                background_color: utils.get_color_from_hex("#dc3cf160")
+                color: 1,1,1,1
+                on_press: root.animate_it(label_bienv)
+
+
+# 5 clicks
+<Pantalla2>:
+    name: "pantalla2"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'MEDIA/stars2.jpg'
+
+    GridLayout:
+        cols: 1
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BackgroundColorLabel:
+                id: label_mision
+                text: "Para acceder a la siguiente misión:\nPresiona el botón 5 veces"
+                font_size : 18
+                color: "#e01be0"
+                background_color: utils.get_color_from_hex("#350669")
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            Button:
+                id: btn_contar
+                text: "Click"
+                font_size: "18"
+                size_hint : 0.25, 0.25
+                color: "#55d32f"
+                on_press: root.clicks()
+
+
+# Tercera pantalla (sin reto)
+<Pantalla3>:
+
+    name: "pantalla3"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'MEDIA/dinos1.jpg'
+
+    GridLayout:
+        cols: 1
+
+        AnchorLayout:
+            anchor_x: 'center'
+            BackgroundColorLabel:
+                pos_hint: None, 0.5
+                size_hint: None, None
+                size: (self.texture_size[0] + 10, self.texture_size[1] + 10)
+                text: "¡Excelente! Pasemos a la siguiente misión"
+                font_size : 18
+                color: "#151020"
+                background_color: utils.get_color_from_hex("#96bbfca9")
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 50
+                spacing: 20
+
+                Button:
+                    id: btn_move_inicio
+                    text: "Regresar pantalla"
+                    font_size: "18"
+                    size_hint : 0.25, 0.25
+                    color: "#55d32f"
+                    on_release:
+                        app.root.current = "pantalla2"
+                        root.manager.transition.direction = "left"
+
+                Button:
+                    id: btn_move_inicio2
+                    text: "Reiniciar"
+                    font_size: "18"
+                    size_hint : 0.25, 0.25
+                    color: "#55d32f"
+                    on_release:
+                        app.root.current = "main"
+                        root.manager.transition.direction = "right"
+
+
+# Pantalla password
+<Pantalla_password>:
+    name: "pantalla_password"
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'MEDIA/grid.jpg'
+
+    GridLayout:
+        cols: 1
+
+        Label:
+            id: label_password
+            markup: True
+            text: "Ingresa la contraseña: "
+            font_size : 24
+            color: "#d9641b"
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            TextInput:
+                id: input_password
+                text: ""
+                size_hint: 0.5,0.5
+                multiline: False
+                password: False
+                font_size: 25
+
+        BoxLayout:
+            orientation: "horizontal"
+            padding: 50
+            spacing: 20
+
+            Button:
+                id: btn_move_inicio
+                text: "Intentar"
+                font_size: "18"
+                color: "#d36e2f"
+                on_press:
+                    root.check_password(label_password, input_password)
+                    input_password.text = ""
+
+            Button:
+                id: btn_move_inicio2
+                text: "Reiniciar"
+                font_size: "18"
+                color: "#55d32f"
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"
+
+
+# Error/contraseña incorrecta
+<Pantalla_error@Screen>:
+
+    name: "pantalla_error"
+
+    canvas.before:
+        Color:
+            rgba: utils.get_color_from_hex("#a10a0a")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation : "vertical"
+        padding:50
+        spacing:20
+
+        AnchorLayout:
+            anchor_x: "center"
+            Label:
+                text: "ERROR\nEspera para intentarlo otra vez"
+                color: utils.get_color_from_hex("#ffffff")
+                font_size: 40
+                bold: True
+
+        AnchorLayout:
+            anchor_x: "center"
+            Button:
+                id: btn_move_inicio2
+                text: "Reiniciar"
+                font_size: "18"
+                size_hint: 0.25,0.25
+                color: "#55d32f"
+                on_release:
+                    app.root.current = "main"
+                    root.manager.transition.direction = "right"
+
