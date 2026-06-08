@@ -38,11 +38,6 @@ class InventarioPopUp(Popup):
 
 class Pantalla1(Screen):
 
-    def play_sound(self, filename):
-        sound = SoundLoader.load(filename)
-        if sound:
-            sound.play()
-
     def animate_it(self, widget):
         # Crear animación: mover a x=150 y cambiar opacidad a 0.5, dura 2 segundos
         anim = Animation(x=150, y=100, opacity=0.5, duration=2, t='out_bounce')
@@ -50,19 +45,20 @@ class Pantalla1(Screen):
 
 class Pantalla2(Screen):
 
-    i =0
-    limite = False
+    # modificar para que la variable sea global y se reinicie cada vez que entres a la pantalla
+    def on_enter(self):
+        self.i = 0
+        self.limite = False
 
     def clicks(self):
         self.i += 1
         print(self.i) 
         if self.i == 5:
             print("Llegaste al límite de clicks")
-            limite = True
+            self.limite = True
             self.manager.current = "pantalla3"
             self.manager.transition.direction = "right"
-            i=0 # reiniciar para la siguiente vez que entremos a la pantalla
-    
+            
 class Pantalla3(Screen):
     pass
 
@@ -89,10 +85,7 @@ class Pantalla_password(Screen):
                 self.manager.current = 'pantalla_error'
 
 class MediaScreen(Screen):
-    def play_sound(self, filename):
-        sound = SoundLoader.load(filename)
-        if sound:
-            sound.play()
+    pass
 
 class GameScreen(Screen):
 
@@ -113,17 +106,33 @@ kv = Builder.load_file("juego_prueba2.kv")
 class AppJuego(App):
     #Window.clearcolor = (.5, 1, .2, 1)  # Establecer el color de fondo de la ventana
     Window.size = (600, 400)  # Establecer el tamaño de la ventana
+    current_sound = None
 
     def build(self):
+        #self.play_music("MEDIA/musica_lofi_cinematic.mp3")  # Reproducir música de fondo al iniciar la aplicación
         return kv
 
-    def _play_sound(self,dt):
-        if self.sound:
-            self.sound.play()
-    
-    def on_stop(self):
-        if self.sound:
-            self.sound.stop()  # Detener la música al cerrar la aplicación  
+    # sonido para botones y efectos
+    def play_sound(self, filename):
+        sound = SoundLoader.load(filename)
+        if sound:
+            sound.play()
+
+    # música de fondo para cada pantalla
+    def play_music(self, filename):
+        # detiene la música actual antes de reproducir la nueva
+        if self.current_sound:
+            self.current_sound.stop()
+            self.current_sound = None
+
+        # solamente reproducir música si hay un archivo en la clase/Pantalla correspondiente
+        if filename:
+            self.current_sound = SoundLoader.load(filename)
+            if self.current_sound:
+                self.current_sound.volume = 0.5  # Ajustar el volumen si es necesario
+                self.current_sound.loop = True  # Hacer que la música se repita
+                self.current_sound.play()  # Reproducir la música
+                print(f"Reproduciendo música: {filename}")
 
     # función para recolectar los objetos
 
