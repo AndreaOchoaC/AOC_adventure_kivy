@@ -1,19 +1,9 @@
 # AOC_adventure_kivy
 Aplicación multi-plataforma desarrollada con Kivy, temática de alguna historia. Múltiples pantallas con "mini-misiones" en cada una. Pantalla de inicio de sesión con contraseña. 
 
-NOTAS ANDREA -Pendiente:
-* validar contraseña ✅
-* contar clicks para llevar a la pantalla ✅
-* fuente, tamaño y tipo de letra ✅ ✅ ✅
-* videos y sonidos,  gifs P ✅ ✅ ✅ 
-* pantalla de carga 
-* transición entre pantallas ✅
-
-** encontrar objetos la pantalla y contarlos
-** inventario --condición para entrar a ciertas pantallas
+To download a folder from GitHub, navigate to your desired repository, select the folder you want to download from GitHub, copy the URL, navigate to https://download-directory.github.io/ and paste the URL into the text box, and hit enter .
 
 * pendiente 28/05: botón de pausar/reanudar música en todas las pantallas
-* cambiar de musica en cada pantalla ✅
 * pendiente 28/05: botón de MENÚ en todas las pantallas
 * pendiente 28/05: La pausa inicial de sonido es demasiado larga
 
