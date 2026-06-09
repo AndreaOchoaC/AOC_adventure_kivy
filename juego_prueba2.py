@@ -64,7 +64,9 @@ class Pantalla3(Screen):
 
 
 class Pantalla_password(Screen):
-    intentos = NumericProperty(1)
+
+    def on_enter(self):
+        self.intentos = 1
 
     def check_password(self,label_password, input_password):
         
@@ -109,7 +111,7 @@ class AppJuego(App):
     current_sound = None
 
     def build(self):
-        #self.play_music("MEDIA/musica_lofi_cinematic.mp3")  # Reproducir música de fondo al iniciar la aplicación
+        self.play_music("MEDIA/musica_lofi_cinematic.mp3")  # Reproducir música de fondo al iniciar la aplicación
         return kv
 
     # sonido para botones y efectos
